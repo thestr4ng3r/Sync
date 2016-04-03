@@ -15,6 +15,20 @@ import DATAStack
    - parameter dataStack: The DATAStack instance.
    - parameter completion: The completion block, it returns an error if something in the Sync process goes wrong.
    */
+  public class func changes(changes: [[String : AnyObject]], inEntityNamed entityName: String, operations: DATAFilterOperation, dataStack: DATAStack, completion: ((error: NSError?) -> Void)?) {
+    self.changes(changes, inEntityNamed: entityName, predicate: nil, operations: operations, dataStack: dataStack, completion: completion)
+  }
+
+  /**
+   Syncs the entity using the received array of dictionaries, maps one-to-many, many-to-many and one-to-one relationships.
+   It also syncs relationships where only the id is present, for example if your model is: Company -> Employee,
+   and your employee has a company_id, it will try to sync using that ID instead of requiring you to provide the
+   entire company object inside the employees dictionary.
+   - parameter changes: The array of dictionaries used in the sync process.
+   - parameter entityName: The name of the entity to be synced.
+   - parameter dataStack: The DATAStack instance.
+   - parameter completion: The completion block, it returns an error if something in the Sync process goes wrong.
+   */
   public class func changes(changes: [[String : AnyObject]], inEntityNamed entityName: String, dataStack: DATAStack, completion: ((error: NSError?) -> Void)?) {
     self.changes(changes, inEntityNamed: entityName, predicate: nil, dataStack: dataStack, completion: completion)
   }
@@ -31,9 +45,27 @@ import DATAStack
    - parameter dataStack: The DATAStack instance.
    - parameter completion: The completion block, it returns an error if something in the Sync process goes wrong.
    */
+  public class func changes(changes: [[String : AnyObject]], inEntityNamed entityName: String, predicate: NSPredicate?, operations: DATAFilterOperation, dataStack: DATAStack, completion: ((error: NSError?) -> Void)?) {
+    dataStack.performInNewBackgroundContext { backgroundContext in
+      self.changes(changes, inEntityNamed: entityName, predicate: predicate, parent: nil, inContext: backgroundContext, operations: operations, dataStack: dataStack, completion: completion)
+    }
+  }
+
+  /**
+   Syncs the entity using the received array of dictionaries, maps one-to-many, many-to-many and one-to-one relationships.
+   It also syncs relationships where only the id is present, for example if your model is: Company -> Employee,
+   and your employee has a company_id, it will try to sync using that ID instead of requiring you to provide the
+   entire company object inside the employees dictionary.
+   - parameter changes: The array of dictionaries used in the sync process.
+   - parameter entityName: The name of the entity to be synced.
+   - parameter predicate: The predicate used to filter out changes, if you want to exclude some local items to be taken in
+   account in the Sync process, you just need to provide this predicate.
+   - parameter dataStack: The DATAStack instance.
+   - parameter completion: The completion block, it returns an error if something in the Sync process goes wrong.
+   */
   public class func changes(changes: [[String : AnyObject]], inEntityNamed entityName: String, predicate: NSPredicate?, dataStack: DATAStack, completion: ((error: NSError?) -> Void)?) {
     dataStack.performInNewBackgroundContext { backgroundContext in
-      self.changes(changes, inEntityNamed: entityName, predicate: predicate, parent: nil, inContext: backgroundContext, dataStack: dataStack, completion: completion)
+      self.changes(changes, inEntityNamed: entityName, predicate: predicate, parent: nil, inContext: backgroundContext, operations: [.All], dataStack: dataStack, completion: completion)
     }
   }
 
@@ -61,7 +93,7 @@ import DATAStack
         predicate = NSPredicate(format: "%K = %@", firstRelationship.name, safeParent)
       }
 
-      self.changes(changes, inEntityNamed: entityName, predicate: predicate, parent: safeParent, inContext: backgroundContext, dataStack: dataStack, completion: completion)
+      self.changes(changes, inEntityNamed: entityName, predicate: predicate, parent: safeParent, inContext: backgroundContext, operations: [.All], dataStack: dataStack, completion: completion)
     }
   }
 
@@ -80,7 +112,7 @@ import DATAStack
    - parameter dataStack: The DATAStack instance.
    - parameter completion: The completion block, it returns an error if something in the Sync process goes wrong.
    */
-  public class func changes(changes: [[String : AnyObject]], inEntityNamed entityName: String, predicate: NSPredicate?, parent: NSManagedObject?, inContext context: NSManagedObjectContext, dataStack: DATAStack, completion: ((error: NSError?) -> Void)?) {
+  public class func changes(changes: [[String : AnyObject]], inEntityNamed entityName: String, predicate: NSPredicate?, parent: NSManagedObject?, inContext context: NSManagedObjectContext, operations: DATAFilterOperation, dataStack: DATAStack, completion: ((error: NSError?) -> Void)?) {
     guard let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context) else { abort() }
 
     let localKey = entity.sync_localKey()
@@ -104,10 +136,10 @@ import DATAStack
       guard let JSON = objectJSON as? [String : AnyObject] else { abort() }
 
       let created = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: context)
-      created.sync_fillWithDictionary(JSON, parent: parent, dataStack: dataStack)
+      created.sync_fillWithDictionary(JSON, parent: parent, operations: [.All], dataStack: dataStack)
       }) { objectJSON, updatedObject in
         guard let JSON = objectJSON as? [String : AnyObject] else { abort() }
-        updatedObject.sync_fillWithDictionary(JSON, parent: parent, dataStack: dataStack)
+        updatedObject.sync_fillWithDictionary(JSON, parent: parent, operations: [.All], dataStack: dataStack)
     }
 
     var syncError: NSError?

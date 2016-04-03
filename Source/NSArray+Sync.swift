@@ -1,6 +1,7 @@
 import Foundation
 import DATAStack
 import NSManagedObject_HYPPropertyMapper
+import DATAFilter
 
 public extension NSArray {
   /**
@@ -10,7 +11,7 @@ public extension NSArray {
    - parameter parent: The parent of the entity, optional since many entities are orphans.
    - parameter dataStack: The DATAStack instance.
    */
-  func preprocessForEntityNamed(entityName: String, predicate: NSPredicate, parent: NSManagedObject?, dataStack: DATAStack) -> [[String : AnyObject]] {
+  func preprocessForEntityNamed(entityName: String, predicate: NSPredicate, parent: NSManagedObject?, operations: DATAFilterOperation, dataStack: DATAStack) -> [[String : AnyObject]] {
     var filteredChanges = [[String : AnyObject]]()
     let validClasses = [NSDate.classForCoder(), NSNumber.classForCoder(), NSString.classForCoder()]
     if let predicate = predicate as? NSComparisonPredicate, selfArray = self as? [[String : AnyObject]] where validClasses.contains({ $0 == predicate.rightExpression.classForCoder }) {
@@ -19,7 +20,7 @@ public extension NSArray {
         if let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: context) {
           selfArray.forEach {
             let object = NSManagedObject(entity: entity, insertIntoManagedObjectContext: context)
-            object.sync_fillWithDictionary($0, parent: parent, dataStack: dataStack)
+            object.sync_fillWithDictionary($0, parent: parent, operations: operations, dataStack: dataStack)
             objectChanges.append(object)
           }
 

@@ -62,6 +62,12 @@
 		14241F1E1DBC3E100042ED81 /* SYNCPropertyMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14241F0A1DBC3CDF0042ED81 /* SYNCPropertyMapper.framework */; };
 		14241F211DBC3E140042ED81 /* DATAStack.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14241F1F1DBC3E140042ED81 /* DATAStack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		14241F221DBC3E140042ED81 /* SYNCPropertyMapper.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 14241F201DBC3E140042ED81 /* SYNCPropertyMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		14840B4A1DC015890018802C /* 301.json in Resources */ = {isa = PBXBuildFile; fileRef = 14840B491DC015890018802C /* 301.json */; };
+		14840B4B1DC015890018802C /* 301.json in Resources */ = {isa = PBXBuildFile; fileRef = 14840B491DC015890018802C /* 301.json */; };
+		14840B4C1DC015890018802C /* 301.json in Resources */ = {isa = PBXBuildFile; fileRef = 14840B491DC015890018802C /* 301.json */; };
+		14840B4F1DC015A30018802C /* 301.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14840B4D1DC015A30018802C /* 301.xcdatamodeld */; };
+		14840B501DC015A30018802C /* 301.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14840B4D1DC015A30018802C /* 301.xcdatamodeld */; };
+		14840B511DC015A30018802C /* 301.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14840B4D1DC015A30018802C /* 301.xcdatamodeld */; };
 		14975BFC1DBC36F00024901A /* NSArray+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44968BF51DA0021300E71A53 /* NSArray+Sync.swift */; };
 		14975BFD1DBC36F00024901A /* NSEntityDescription+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44968BF61DA0021300E71A53 /* NSEntityDescription+Sync.swift */; };
 		14975BFE1DBC36F00024901A /* NSManagedObject+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44968BF71DA0021300E71A53 /* NSManagedObject+Sync.swift */; };
@@ -511,6 +517,8 @@
 		14241F201DBC3E140042ED81 /* SYNCPropertyMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SYNCPropertyMapper.framework; path = Carthage/Build/watchOS/SYNCPropertyMapper.framework; sourceTree = "<group>"; };
 		146D72AC1AB782920058798C /* iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		146D72B11AB782920058798C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14840B491DC015890018802C /* 301.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 301.json; sourceTree = "<group>"; };
+		14840B4E1DC015A30018802C /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		14975BE81DBC368B0024901A /* tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14975BF41DBC36960024901A /* macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = macOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14C046341DBC19D300CB6C16 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -803,6 +811,7 @@
 		4403DBDE1D9F90B5001C8DA6 /* JSONs */ = {
 			isa = PBXGroup;
 			children = (
+				14840B491DC015890018802C /* 301.json */,
 				4403DBDF1D9F90B5001C8DA6 /* 151-many-to-many-notes-update.json */,
 				4403DBE01D9F90B5001C8DA6 /* 151-many-to-many-notes.json */,
 				4403DBE11D9F90B5001C8DA6 /* 151-many-to-many-tags.json */,
@@ -865,6 +874,7 @@
 		4403DC161D9F90B5001C8DA6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				14840B4D1DC015A30018802C /* 301.xcdatamodeld */,
 				1421405B1DBCDD52000FF107 /* Tests.xcdatamodeld */,
 				4403DC171D9F90B5001C8DA6 /* 151-many-to-many.xcdatamodeld */,
 				4403DC191D9F90B5001C8DA6 /* 151-ordered-many-to-many.xcdatamodeld */,
@@ -1258,6 +1268,7 @@
 				4403DC6D1D9F90B5001C8DA6 /* bug-125-light.json in Resources */,
 				4403DC8B1D9F90B5001C8DA6 /* to-one-snakecase.json in Resources */,
 				4403DC8E1D9F90B5001C8DA6 /* users_b.json in Resources */,
+				14840B4A1DC015890018802C /* 301.json in Resources */,
 				445D3BC81D9F9373007F9E26 /* simple.json in Resources */,
 				4403DC841D9F90B5001C8DA6 /* operation-types-users-b.json in Resources */,
 				4403DC751D9F90B5001C8DA6 /* bug-257.json in Resources */,
@@ -1327,6 +1338,7 @@
 				14975C6A1DBC373A0024901A /* 157-cities.json in Resources */,
 				14975C6B1DBC373A0024901A /* 157-locations-update.json in Resources */,
 				14975C6C1DBC373A0024901A /* 157-locations.json in Resources */,
+				14840B4B1DC015890018802C /* 301.json in Resources */,
 				14975C6D1DBC373A0024901A /* 225-a-empty.json in Resources */,
 				14975C6E1DBC373A0024901A /* 225-a-null.json in Resources */,
 				14975C6F1DBC373A0024901A /* 225-a-replaced.json in Resources */,
@@ -1396,6 +1408,7 @@
 				14975CA81DBC374C0024901A /* 157-cities.json in Resources */,
 				14975CA91DBC374C0024901A /* 157-locations-update.json in Resources */,
 				14975CAA1DBC374C0024901A /* 157-locations.json in Resources */,
+				14840B4C1DC015890018802C /* 301.json in Resources */,
 				14975CAB1DBC374C0024901A /* 225-a-empty.json in Resources */,
 				14975CAC1DBC374C0024901A /* 225-a-null.json in Resources */,
 				14975CAD1DBC374C0024901A /* 225-a-replaced.json in Resources */,
@@ -1555,6 +1568,7 @@
 				4403DC9E1D9F90B5001C8DA6 /* Bug239.xcdatamodeld in Sources */,
 				4403DC9C1D9F90B5001C8DA6 /* Bug179.xcdatamodeld in Sources */,
 				4403DCAB1D9F90B5001C8DA6 /* Organizations.xcdatamodeld in Sources */,
+				14840B4F1DC015A30018802C /* 301.xcdatamodeld in Sources */,
 				4403DCA21D9F90B5001C8DA6 /* Camelcase.xcdatamodeld in Sources */,
 				4403DCAA1D9F90B5001C8DA6 /* OrderedSocial.xcdatamodeld in Sources */,
 				4403DC991D9F90B5001C8DA6 /* Bug113.xcdatamodeld in Sources */,
@@ -1611,6 +1625,7 @@
 				14975C211DBC36F00024901A /* Recursive.xcdatamodeld in Sources */,
 				14975C221DBC36F00024901A /* Social.xcdatamodeld in Sources */,
 				14975C231DBC36F00024901A /* ToOne.xcdatamodeld in Sources */,
+				14840B501DC015A30018802C /* 301.xcdatamodeld in Sources */,
 				14975C241DBC36F00024901A /* Unique.xcdatamodeld in Sources */,
 				14975C251DBC36F00024901A /* NSArray+SyncTests.swift in Sources */,
 				14975C261DBC36F00024901A /* NSEntityDescription+SyncTests.swift in Sources */,
@@ -1667,6 +1682,7 @@
 				14975C551DBC37180024901A /* Recursive.xcdatamodeld in Sources */,
 				14975C561DBC37180024901A /* Social.xcdatamodeld in Sources */,
 				14975C571DBC37180024901A /* ToOne.xcdatamodeld in Sources */,
+				14840B511DC015A30018802C /* 301.xcdatamodeld in Sources */,
 				14975C581DBC37180024901A /* Unique.xcdatamodeld in Sources */,
 				14975C591DBC37180024901A /* NSArray+SyncTests.swift in Sources */,
 				14975C5A1DBC37180024901A /* NSEntityDescription+SyncTests.swift in Sources */,
@@ -2266,6 +2282,16 @@
 			);
 			currentVersion = 1421405C1DBCDD52000FF107 /* Tests.xcdatamodel */;
 			path = Tests.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		14840B4D1DC015A30018802C /* 301.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				14840B4E1DC015A30018802C /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 14840B4E1DC015A30018802C /* DataModel.xcdatamodel */;
+			path = 301.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

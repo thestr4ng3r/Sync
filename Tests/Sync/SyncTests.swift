@@ -1240,4 +1240,23 @@ class SyncTests: XCTestCase {
 
         try! dataStack.drop()
     }
+
+    func test301() {
+        let dataStack = Helper.dataStackWithModelName("301")
+
+        let remoteTasks = Helper.objectsFromJSON("301.json") as! [[String : Any]]
+        let predicate = NSPredicate(format: "synced == true")
+        Sync.changes(remoteTasks, inEntityNamed: "Task", predicate: predicate, dataStack: dataStack, completion: nil)
+        XCTAssertEqual(Helper.countForEntity("Task", inContext:dataStack.mainContext), 1)
+
+        let remoteTask = Helper.fetchEntity("Task", predicate: NSPredicate(format: "id == %@", "server_1"), inContext: dataStack.mainContext).first!
+        remoteTask.setValue(true, forKey: "completed")
+        remoteTask.setValue(false, forKey: "synced")
+        try! dataStack.mainContext.save()
+
+        Sync.changes(remoteTasks, inEntityNamed: "Task", predicate: predicate, dataStack: dataStack, completion: nil)
+        XCTAssertEqual(Helper.countForEntity("Task", inContext:dataStack.mainContext), 1)
+
+        try! dataStack.drop()
+    }
 }

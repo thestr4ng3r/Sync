@@ -39,8 +39,8 @@ class DATAFilter: NSObject {
                                             inserted: (_ JSON: [String : Any]) -> Void,
                                             updated: (_ JSON: [String : Any], _ updatedObject: NSManagedObject) -> Void) {
         // `DATAObjectIDs.objectIDsInEntityNamed` also deletes all objects that don't have a primary key or that have the same primary key already found in the context
-        let primaryKeysAndObjectIDs = context.managedObjectIDs(in: entityName, usingAsKey: localPrimaryKey, predicate: predicate) as [NSObject : NSManagedObjectID]
-        let localPrimaryKeys = Array(primaryKeysAndObjectIDs.keys)
+        let localPrimaryKeysAndObjectIDs = context.managedObjectIDs(in: entityName, usingAsKey: localPrimaryKey, predicate: predicate) as [NSObject : NSManagedObjectID]
+        let localPrimaryKeys = Array(localPrimaryKeysAndObjectIDs.keys)
         let remotePrimaryKeys = changes.map { $0[remotePrimaryKey] }
         let remotePrimaryKeysWithoutNils = (remotePrimaryKeys.filter { (($0 as? NSObject) != NSNull()) && ($0 != nil) } as! [NSObject?]) as! [NSObject]
 
@@ -66,7 +66,7 @@ class DATAFilter: NSObject {
 
         if operations.contains(.Delete) {
             for fetchedID in deletedObjectIDs {
-                let objectID = primaryKeysAndObjectIDs[fetchedID]!
+                let objectID = localPrimaryKeysAndObjectIDs[fetchedID]!
                 let object = context.object(with: objectID)
                 context.delete(object)
             }
@@ -82,7 +82,7 @@ class DATAFilter: NSObject {
         if operations.contains(.Update) {
             for fetchedID in updatedObjectIDs {
                 let JSON = remotePrimaryKeysAndChanges[fetchedID]!
-                let objectID = primaryKeysAndObjectIDs[fetchedID]!
+                let objectID = localPrimaryKeysAndObjectIDs[fetchedID]!
                 let object = context.object(with: objectID)
                 updated(JSON, object)
             }

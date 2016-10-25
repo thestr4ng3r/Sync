@@ -1244,15 +1244,23 @@ class SyncTests: XCTestCase {
     func test301() {
         let dataStack = Helper.dataStackWithModelName("301")
 
-        let initialTask = NSEntityDescription.insertNewObject(forEntityName: "Task", into: dataStack.mainContext)
-        initialTask.setValue("remote_1", forKey: "id")
-        initialTask.setValue(true, forKey: "completed")
-        initialTask.setValue(false, forKey: "synced")
+        let remoteTask = NSEntityDescription.insertNewObject(forEntityName: "Task", into: dataStack.mainContext)
+        remoteTask.setValue("remote", forKey: "id")
+        remoteTask.setValue(true, forKey: "completed")
+        remoteTask.setValue(false, forKey: "synced")
+
+        let localTask = NSEntityDescription.insertNewObject(forEntityName: "Task", into: dataStack.mainContext)
+        localTask.setValue("local", forKey: "id")
+        localTask.setValue(true, forKey: "completed")
+        localTask.setValue(false, forKey: "synced")
+
         try! dataStack.mainContext.save()
 
-        let remoteTasks = Helper.objectsFromJSON("301.json") as! [[String : Any]]
+        // Only sync elements marked as synced == true
+        // meaning don't overwrite changes in remote
+        let json = [["id": "remote", "completed": false, "synced": true]]
         let predicate = NSPredicate(format: "synced == true")
-        Sync.changes(remoteTasks, inEntityNamed: "Task", predicate: predicate, dataStack: dataStack, completion: nil)
+        Sync.changes(json, inEntityNamed: "Task", predicate: predicate, dataStack: dataStack, completion: nil)
         XCTAssertEqual(Helper.countForEntity("Task", inContext:dataStack.mainContext), 1)
 
         try! dataStack.drop()

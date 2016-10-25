@@ -1,8 +1,6 @@
 [
   {
-    "id": "server_1",
-    "name": "Server task 1",
-    "created_date": "2016-01-01T01:00:00",
+    "id": "remote_1",
     "completed": false
   }
 ]

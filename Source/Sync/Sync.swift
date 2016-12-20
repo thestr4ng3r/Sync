@@ -26,7 +26,7 @@ import DATAStack
     var changes: [[String : AnyObject]]
     var entityName: String
     var predicate: NSPredicate?
-    var filterOperations = DATAFilter.Operation.All
+    public var filterOperations = DATAFilter.Operation.All
     var parent: NSManagedObject?
     var context: NSManagedObjectContext?
     unowned var dataStack: DATAStack
